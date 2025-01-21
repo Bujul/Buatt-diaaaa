@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffe6f2;
+            font-family: Arial, sans-serif;
+            padding: 15px;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+            max-width: 90%;
+            width: 400px;
+            margin: auto;
+        }
+
+        .heart-bg {
+            font-size: clamp(30px, 8vw, 50px);
+            animation: pulse 1.5s infinite;
+        }
+
+        .message {
+            margin: 20px 0;
+            font-size: clamp(16px, 4vw, 18px);
+            color: #ff1493;
+            padding: 0 10px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: #ff69b4;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-size: clamp(14px, 3vw, 16px);
+            margin: 5px;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        .home-button {
+            background-color: #ff69b4;
+            margin-top: 15px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #reasons1 p, #reasons2 p {
+            font-size: clamp(14px, 3.5vw, 16px);
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fff0f5;
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heart-bg">
+            💖
+        </div>
+        <div class="message">
+            Hey, mau tau ga kenapa kamu harus suka sama aku? 💝
+        </div>
+        <div class="buttons">
+            <button onclick="showReason1()">Kenapa?</button>
+            <button onclick="showReason2()">Kelebihan Gwe</button>
+        </div>
+        <div id="reasons1" class="hidden">
+        </div>
+        <div id="reasons2" class="hidden">
+        </div>
+        <button class="home-button" onclick="location.href='index.html'">Kembali ke Beranda</button>
+    </div>
+
+    <script>
+        const reasons1 = [
+            "Karena aku setia (sudah pasti) 💑",
+            "Karena aku ganteng juga (kata mama gitu) 😎",
+            "Aku jago basket (kalau lawan bayi) 🏀",
+            "Nilaiku bagus (kalau tau jawabannya) 📚"
+        ];
+
+        const reasons2 = [
+            "Karena aku always fast respon (kecuali tidur) 📱",
+            "Karena aku rajin banget (banget) ✨",
+            "Karena aku sangat baik (ini bener banget) 😇"
+        ];
+
+        let currentIndex1 = 0;
+        let currentIndex2 = 0;
+
+        function showReason1() {
+            if (currentIndex1 < reasons1.length) {
+                const reasonsDiv = document.getElementById('reasons1');
+                reasonsDiv.style.display = 'block';
+                document.getElementById('reasons2').style.display = 'none';
+                reasonsDiv.innerHTML += `<p>${reasons1[currentIndex1]}</p>`;
+                currentIndex1++;
+            }
+        }
+
+        function showReason2() {
+            if (currentIndex2 < reasons2.length) {
+                const reasonsDiv = document.getElementById('reasons2');
+                reasonsDiv.style.display = 'block';
+                document.getElementById('reasons1').style.display = 'none';
+                reasonsDiv.innerHTML += `<p>${reasons2[currentIndex2]}</p>`;
+                currentIndex2++;
+            }
+        }
+
+        function resetPage() {
+            document.getElementById('reasons1').style.display = 'none';
+            document.getElementById('reasons2').style.display = 'none';
+            document.getElementById('reasons1').innerHTML = '';
+            document.getElementById('reasons2').innerHTML = '';
+            currentIndex1 = 0;
+            currentIndex2 = 0;
+        }
+    </script>
+</body>
+</html>

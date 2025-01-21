@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <a href="http://127.0.0.1:3000/WEB" rel="stylesheet"></a>
+    <title>Kalkulator Kecocokan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff6b6b;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #ff6b6b;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: #ff6b6b;
+            border: none;
+            border-radius: 0.5rem;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-bottom: 0.5rem;
+        }
+
+        button:hover {
+            background: #ff5252;
+        }
+
+        .result {
+            margin-top: 1.5rem;
+            text-align: center;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .percentage {
+            font-size: 3rem;
+            color: #ff6b6b;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .message {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+
+        .btn-submit {
+      background-color: #ff6f61;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background-color: #ff3b30;
+    }
+        .history-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s;
+        }
+
+        .history-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .history-date {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 0.3rem;
+        }
+
+        .history-names {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .history-percentage {
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-top: 0.3rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .nav-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .nav-btn.active {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .history-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        .no-history {
+            text-align: center;
+            color: #666;
+            padding: 2rem;
+        }
+
+        .clear-history {
+            background: #dc3545;
+            margin-top: 1rem;
+        }
+
+        .clear-history:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page active" id="calculator-page">
+            <h1>❤️ Kalkulator Kecocokan ❤️</h1>
+            <div class="input-group">
+                <label for="name1">Nama Kamu:</label>
+                <input type="text" id="name1" placeholder="Masukkan nama kamu" required>
+            </div>
+            <div class="input-group">
+                <label for="name2">Nama Pasangan:</label>
+                <input type="text" id="name2" placeholder="Masukkan nama pasangan" required>
+            </div>
+            <button onclick="calculateLove()">Hitung Kecocokan</button>
+            <div class="result" id="result">
+                <div class="percentage" id="percentage">0%</div>
+                <div class="message" id="message"></div>
+            </div>
+        </div>
+
+        <div class="page" id="history-page">
+            <h1>📝 Riwayat Perhitungan</h1>
+            <div class="history-container" id="history-container">
+            </div>
+            <button class="clear-history" onclick="clearHistory()">Hapus Semua Riwayat</button>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn active" onclick="showPage('calculator-page')">Kalkulator</button>
+            <button class="nav-btn" onclick="showPage('history-page')">Riwayat</button>
+            <button class="nav-btn" onclick="location.href='index.html'">Kembali</button>
+        </div>
+    </div>
+
+    <script>
+        let historyArray = JSON.parse(localStorage.getItem('loveCalculatorHistory')) || [];
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        
+        function formatDate(date) {
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                timeZone: 'Asia/Jakarta'
+            };
+            return new Date(date).toLocaleDateString('id-ID', options);
+        }
+
+        function calculateLove() {
+            const name1 = document.getElementById('name1').value.trim();
+            const name2 = document.getElementById('name2').value.trim();
+
+            if (!name1 || !name2) {
+                alert('Mohon isi kedua nama terlebih dahulu!');
+                return;
+            }
+
+            const percentage = getRandomNumber(50, 100);
+
+            const resultDiv = document.getElementById('result');
+            const percentageDiv = document.getElementById('percentage');
+            const messageDiv = document.getElementById('message');
+
+            resultDiv.classList.add('show');
+
+            let currentPercent = 0;
+            const interval = setInterval(() => {
+                if (currentPercent >= percentage) {
+                    clearInterval(interval);
+                } else {
+                    currentPercent++;
+                    percentageDiv.textContent = currentPercent + '%';
+                }
+            }, 20);
+
+            let message = '';
+            let emoji = '';
+            
+            
+           if (percentage >= 95) {
+    message = 'Wow! Udah cocok jadian ga si             ...';
+    emoji = '❤️😍❤️';
+
+        }else if (percentage >= 90) {
+    message = 'Wow! cocok banget dah pokoknya          ...';
+    emoji = '😍';
+
+  
+} else if (percentage >= 80) {
+    message = 'Mangat cantik dikit lagi,harus 100% pokoknya';
+    emoji = '❤️';
+} else if (percentage >= 70) {
+    message = 'KKM nih maunya?';
+    emoji = '🙂‍↔️';
+} else if (percentage >= 60) {
+    message = 'Udah setengah,dikit lagi';
+    emoji = '😊';
+} else {
+    message = 'Coba lagi sampai 100% ';
+    emoji = '🌟';
+}
+            messageDiv.textContent = message + ' ' + emoji;
+
+            addToHistory(name1, name2, percentage);
+            
+            createHearts();
+        }
+
+
+
+        
+        function addToHistory(name1, name2, percentage) {
+            const historyItem = {
+                name1,
+                name2,
+                percentage,
+                timestamp: new Date().toISOString()
+            };
+
+            historyArray.unshift(historyItem);
+
+            localStorage.setItem('loveCalculatorHistory', JSON.stringify(historyArray));
+
+            updateHistoryDisplay();
+        }
+
+        function updateHistoryDisplay() {
+            const historyContainer = document.getElementById('history-container');
+            
+            if (historyArray.length === 0) {
+                historyContainer.innerHTML = '<div class="no-history">Belum ada riwayat perhitungan</div>';
+                return;
+            }
+
+            historyContainer.innerHTML = '';
+            historyArray.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.innerHTML = `
+                    <div class="history-date">${formatDate(item.timestamp)}</div>
+                    <div class="history-names">${item.name1} & ${item.name2}</div>
+                    <div class="history-percentage">${item.percentage}% kecocokan</div>
+                `;
+                historyContainer.appendChild(historyItem);
+            });
+        }
+
+        function clearHistory() {
+            if (confirm('Apakah Anda yakin ingin menghapus semua riwayat?')) {
+                historyArray = [];
+                localStorage.setItem('loveCalculatorHistory', JSON.stringify(historyArray));
+                updateHistoryDisplay();
+            }
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            if (pageId === 'history-page') {
+                updateHistoryDisplay();
+            }
+        }
+
+        function createHearts() {
+            const heartsContainer = document.querySelector('.hearts') || document.createElement('div');
+            heartsContainer.className = 'hearts';
+            if (!document.querySelector('.hearts')) {
+                document.body.appendChild(heartsContainer);
+            }
+
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.innerHTML = '💗';
+                    heart.style.position = 'absolute';
+                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = '-20px';
+                    heart.style.opacity = '0.8';
+                    heart.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
+                    heart.style.transition = 'all ' + (Math.random() * 2 + 3) + 's ease-out';
+                    heartsContainer.appendChild(heart);
+
+
+                    
+                    setTimeout(() => {
+                        heart.style.top = '100vh';
+                        heart.style.opacity = '0';
+                    }, 100);
+
+                    setTimeout(() => {
+                        heartsContainer.removeChild(heart);
+
+                        
+                    }, 5000);
+                }, i * 300);
+            }
+        }
+
+        updateHistoryDisplay();
+      
+        
+    </script>
+</body>
+</html>

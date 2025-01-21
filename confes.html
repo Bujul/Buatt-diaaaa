@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why I Like You</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            min-height: 100vh;
+            padding: 2rem;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .heart-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .heart-animation {
+            font-size: 5rem;
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff4b6e;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+
+        .guitar-animation {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .guitar {
+            font-size: 3rem;
+            display: inline-block;
+            animation: playGuitar 2s infinite;
+        }
+
+        @keyframes playGuitar {
+            0% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+            100% { transform: rotate(-5deg); }
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #ff4b6e;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .back-button:hover {
+            background: #e63e5c;
+            transform: translateY(-2px);
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .music-player {
+            width: 100%;
+            margin: 2rem 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .heart-animation {
+                font-size: 4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heart-container">
+            <div class="heart-animation">💗</div>
+        </div>
+        
+        <h1>Why I Like You</h1>
+        
+        <p>Sebenernya simpel aja sih kenapa ini dibuat, karena aku mau confess aja, cuman aku pengen buat sebuah confess yang spesial gitu yang bisa buat kamu seneng aja si. Harusnya ada tuh manusia nyanyi sambil main gitar pake lagu ini, cuman orangnya ga pede.. yaudahlah maap, dengerin aja penyanyi aslinya...</p>
+        
+        <div class="guitar-animation">
+            <div class="guitar">🎸</div>
+        </div>
+        
+        <div class="music-player">
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/dan-martin-escarpe/i-like-you-so-much-youll-know-it-english-ysabelle-cuevas&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+        </div>
+
+        <p>Kalau alasan kenapa aku suka kamu sih simpel aja, pertama tuh yang paling kusuka dari kamu tuh ekspresi nyaaaa!!!, ekspresi mu tuh kayak beda dari yang lain, jadi kek ga semua orang bisa ngekspresiin suasana hati dia kayak kamu, pokoknya aku baru ketemu orang spesial yang bagiku keren banget.</p>
+        
+        <p>Terus yang kedua sih aku masi bingung ya mau pilih senyuman mu apa rambutmu, soalnya tuh senyumannya manisssss bangettttt kayak lagi ngobrol sama bocil tapi udah dewasa, tapi rambutmu juga bagussss banget..... ini serius ga boong ni ya, dari ekspresimu, senyummu apalagi pas lepas kacamata behhh makin lucuuu.</p>
+        
+        <p>Apalagi ya, mungkin cuman itu aja sih, Sebenernya masi banyak si cuman aku ga tau gimana mau ngejelasinnya 😊</p>
+        
+        <div class="button-container">
+            <a href="index.html" class="back-button">Kembali ke Beranda</a>
+        </div>
+    </div>
+</body>
+</html>

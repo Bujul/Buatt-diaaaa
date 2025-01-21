@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For You ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #ff9a9e);
+            background-size: 300% 300%;
+            animation: gradientBG 15s ease infinite;
+            padding: clamp(10px, 5vw, 20px);
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: min(90%, 600px);
+            background: rgba(255, 255, 255, 0.95);
+            padding: clamp(1rem, 5vw, 2rem);
+            border-radius: clamp(10px, 3vw, 20px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .heart-bg {
+            position: absolute;
+            font-size: clamp(200px, 50vw, 400px);
+            opacity: 0.05;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+        }
+
+        .message {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            color: #ff4b6e;
+            margin: clamp(1rem, 3vw, 2rem) 0;
+            position: relative;
+            line-height: 1.6;
+            z-index: 1;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: clamp(10px, 3vw, 20px);
+            margin-top: clamp(1rem, 3vw, 2rem);
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn {
+            padding: clamp(0.5rem, 2vw, 0.8rem) clamp(1rem, 4vw, 2rem);
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            touch-action: manipulation;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .btn-yes {
+            background: #ff4b6e;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 75, 110, 0.4);
+            min-width: 120px;
+        }
+
+        .btn-yes:hover, .btn-yes:focus {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 75, 110, 0.6);
+        }
+
+        .btn-no {
+            background: #f8f9fa;
+            color: #ff4b6e;
+            border: 2px solid #ff4b6e;
+            position: relative;
+            min-width: 120px;
+        }
+
+        .btn-no:hover, .btn-no:focus {
+            background: #fff0f3;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            pointer-events: none;
+            user-select: none;
+            animation: float 6s linear infinite;
+            z-index: 9999;
+            font-size: clamp(20px, 5vw, 30px);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 1rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 80%;
+                margin: 5px 0;
+            }
+        }
+
+        @media (hover: none) {
+            .btn:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+
+        @supports (-webkit-touch-callout: none) {
+            /* CSS specific to iOS devices */
+            body {
+                min-height: -webkit-fill-available;
+            }
+        }
+
+        @media screen and (orientation: landscape) and (max-height: 500px) {
+            .container {
+                margin: 20px 0;
+            }
+            
+            .message {
+                font-size: clamp(1rem, 3vw, 1.5rem);
+            }
+            
+            .buttons {
+                flex-direction: row;
+            }
+        }
+
+        /* Untuk perangkat dengan dark mode */
+        @media (prefers-color-scheme: dark) {
+            .container {
+                background: rgba(255, 255, 255, 0.98);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heart-bg">💖</div>
+        <div class="message">
+            You are the person my heart has been waiting for, the one who makes everything feel complete. I can't imagine a future without you in it. Would you be mine forever?
+        </div>
+        <div class="buttons">
+            <button class="btn btn-yes" onclick="acceptProposal()">Yes</button>
+            <button class="btn btn-no" onmouseover="moveButton(this)" onclick="moveButton(this)">No</button>
+        </div>
+    </div>
+
+    <script>
+        function moveButton(button) {
+            // Get container dimensions instead of viewport
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            const viewportWidth = window.innerWidth - button.offsetWidth;
+            const viewportHeight = window.innerHeight - button.offsetHeight;
+            
+            // Generate random positions within viewport
+            const newX = Math.random() * viewportWidth;
+            const newY = Math.random() * viewportHeight;
+            
+            // Ensure button stays within visible viewport
+            const finalX = Math.min(Math.max(0, newX), viewportWidth);
+            const finalY = Math.min(Math.max(0, newY), viewportHeight);
+            
+            // Apply new position with smooth transition
+            button.style.position = 'fixed';
+            button.style.transition = 'all 0.3s ease';
+            button.style.left = `${finalX}px`;
+            button.style.top = `${finalY}px`;
+        }
+
+        function acceptProposal() {
+            // Create floating hearts effect
+            for(let i = 0; i < 20; i++) {
+                createFloatingHeart();
+            }
+            window.open('https://wa.me/62895622546106?text=iya%2C%20aku%20mau%20kok', '_blank');
+            
+        }
+
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💖';
+            heart.className = 'floating-hearts';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            document.body.appendChild(heart);
+            
+            // Remove heart after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        // Prevent zoom on double tap for iOS devices
+        document.addEventListener('touchmove', function(event) {
+            if (event.scale !== 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
+        // Disable right-click on buttons
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('contextmenu', e => e.preventDefault());
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .gacha-machine {
+            width: 300px;
+            height: 450px;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .machine-body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #ff80ab, #f48fb1);
+            border-radius: 40px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border: 5px solid #fff;
+            overflow: hidden;
+        }
+
+        .machine-top {
+            height: 80px;
+            background: #f06292;
+            border-radius: 35px 35px 0 0;
+            border-bottom: 5px solid #fff;
+            position: relative;
+        }
+
+        .machine-top::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 20px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+        }
+
+        .machine-glass {
+            height: 250px;
+            background: rgba(255,255,255,0.25);
+            margin: 15px;
+            border-radius: 20px;
+            border: 3px solid rgba(255,255,255,0.5);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .machine-bottom {
+            height: 100px;
+            background: #f06292;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            border-radius: 0 0 35px 35px;
+            border-top: 5px solid #fff;
+        }
+
+        .dispenser {
+            width: 120px;
+            height: 30px;
+            background: #ec407a;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 15px;
+            border: 3px solid #fff;
+        }
+
+        .ball {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            position: absolute;
+            animation: float 3s infinite ease-in-out;
+            box-shadow: inset -2px -2px 4px rgba(0,0,0,0.1);
+        }
+
+        .lever-base {
+            position: absolute;
+            right: -25px;
+            top: 40%;
+            width: 50px;
+            height: 50px;
+            background: #ec407a;
+            border-radius: 25px;
+            border: 4px solid #fff;
+        }
+
+        .lever {
+            position: absolute;
+            right: -15px;
+            top: calc(40% + 25px);
+            width: 30px;
+            height: 100px;
+            background: linear-gradient(90deg, #f06292, #ec407a);
+            border-radius: 15px;
+            cursor: pointer;
+            transform-origin: top center;
+            transition: 0.3s;
+            border: 3px solid #fff;
+        }
+
+        .lever::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: -5px;
+            width: 40px;
+            height: 40px;
+            background: #ec407a;
+            border-radius: 50%;
+            border: 3px solid #fff;
+        }
+
+        .decorative-circle {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .message-box {
+            width: 280px;
+            background: white;
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 4px solid #f48fb1;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #ff80ab, #f48fb1);
+        }
+
+        .message {
+            font-size: 1.1rem;
+            color: #d81b60;
+            margin: 10px 0;
+            line-height: 1.4;
+            min-height: 60px;
+            transition: 0.3s;
+        }
+
+        .home-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: #f48fb1;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 3px solid #fff;
+            font-weight: bold;
+        }
+
+        .home-btn:hover {
+            background: #f06292;
+            transform: translateY(-2px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @media (max-width: 640px) {
+            .container { flex-direction: column; }
+            .gacha-machine { margin-bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <button class="home-btn" onclick="location.href='index.html'">← Kembali</button>
+    
+    <div class="container">
+        <div class="gacha-machine">
+            <div class="machine-body">
+                <div class="machine-top"></div>
+                <div class="machine-glass" id="glass"></div>
+                <div class="machine-bottom">
+                    <div class="dispenser"></div>
+                </div>
+                <div class="lever-base"></div>
+                <div class="lever" onclick="getQuote()"></div>
+            </div>
+        </div>
+        
+        <div class="message-box">
+            <div class="message" id="message">
+                Tarik tuas pink untuk mendapatkan quotes hari ini! ✨
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const glass = document.getElementById('glass');
+        const colors = ['#ffcdd2', '#f8bbd0', '#f48fb1', '#ff80ab'];
+        const quotes = [
+            "✨ Setiap kali aku melihatmu, jantungku berdebar kencang dan duniaku menjadi lebih cerah.",
+            "🌸 Dalam setiap senyummu, aku menemukan alasan untuk jatuh cinta lagi dan lagi.",
+            "💖 Kamu bukan hanya bagian dari mimpiku, tapi juga alasanku untuk bangun setiap pagi.",
+            "🌈 Aku mungkin bukan orang yang sempurna, tapi cintaku padamu adalah hal paling tulus yang kumiliki.",
+            "🎀 Aku ingin menjadi alasan di balik senyummu, seperti kamu yang selalu menjadi alasan di balik senyumku.",
+            "💫 Kamu adalah jawaban dari doa yang bahkan belum pernah kuucapkan.",
+            "💫 Kuncinya adalah = nama kamu.",
+            "🦄 Bersamamu, aku merasa bisa menjadi versi terbaik dari diriku sendiri.",
+            "🌟 Aku mungkin tidak bisa menjanjikan selamanya, tapi aku bisa berjanji untuk mencintaimu dengan sepenuh hatiku setiap hari.",
+            "🌟 Setiap detik bersamamu adalah momen yang tak ternilai harganya bagiku.",
+            "🌟 Dalam matamu, aku melihat masa depan yang selalu kuimpikan."
+        ];
+
+        // Create floating balls
+        for(let i = 0; i < 15; i++) {
+            const ball = document.createElement('div');
+            ball.className = 'ball';
+            ball.style.backgroundColor = colors[i % colors.length];
+            ball.style.left = `${Math.random() * 80 + 10}%`;
+            ball.style.top = `${Math.random() * 80 + 10}%`;
+            ball.style.animationDelay = `${Math.random() * 2}s`;
+            glass.appendChild(ball);
+        }
+
+        // Add decorative circles
+        const addDecorativeCircles = () => {
+            const positions = [
+                {top: '10%', left: '10%'},
+                {top: '10%', right: '10%'},
+                {bottom: '10%', left: '10%'},
+                {bottom: '10%', right: '10%'}
+            ];
+
+            positions.forEach(pos => {
+                const circle = document.createElement('div');
+                circle.className = 'decorative-circle';
+                Object.assign(circle.style, pos);
+                document.querySelector('.machine-top').appendChild(circle);
+            });
+        };
+
+        addDecorativeCircles();
+
+        let isAnimating = false;
+
+        function getQuote() {
+            if(isAnimating) return;
+            isAnimating = true;
+
+            const lever = document.querySelector('.lever');
+            const msg = document.getElementById('message');
+            const balls = document.querySelectorAll('.ball');
+            
+            lever.style.transform = 'rotate(30deg)';
+            msg.style.opacity = '0';
+
+            // Animate balls faster
+            balls.forEach(ball => {
+                ball.style.animation = 'none';
+                ball.offsetHeight;
+                ball.style.animation = 'float 0.5s infinite ease-in-out';
+            });
+
+            setTimeout(() => {
+                msg.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+                msg.style.opacity = '1';
+                lever.style.transform = 'rotate(0deg)';
+                
+                // Reset ball animation
+                balls.forEach(ball => {
+                    ball.style.animation = 'float 3s infinite ease-in-out';
+                });
+                
+                isAnimating = false;
+            }, 800);
+        }
+    </script>
+</body>
+</html>
